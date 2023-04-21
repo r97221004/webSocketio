@@ -1,0 +1,5 @@
+flask
+flask-socketio
+gevent==20.9.0
+greenlet==1.1.2
+gunicorn==20.0.4
