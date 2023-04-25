@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from flask_socketio import SocketIO, send
+from flask_socketio import SocketIO, send, disconnect
 from auth import sio_jwt_required
 
 
@@ -22,6 +22,14 @@ def handle_message(message):
     if message != "User connected!":
         message = message + ' from backend'
         send(message, broadcast=True)
+
+
+@socketio.on('disconnect.request', namespace='/index')
+@sio_jwt_required()
+def disconnect_request():
+    sid = request.sid
+    disconnect(sid)
+    print("success!!! sid[{}] disconnect ".format(sid))
 
 
 @socketio.on('connect', namespace='/demo')

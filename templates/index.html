@@ -38,7 +38,12 @@
                 $('#sendBtn').on('click', function () {
                     socket.send($('#username').val() + ': ' + $('#message').val());
                     $('#message').val('');
-                })
+                });
+
+                $('form#disconnect').submit(function (event) {
+                    socket.emit('disconnect.request');
+                    return false;
+                });
 
             })
         </script>
@@ -52,6 +57,10 @@
         <input type="text" id="username" placeholder="Username">
         <input type="text" id="message" placeholder="Message">
         <button id="sendBtn">Send</button>
+        <br /><br />
+        <form id="disconnect" method="POST" action="#">
+            <input type="submit" value="Disconnect">
+        </form>
 
 
 
