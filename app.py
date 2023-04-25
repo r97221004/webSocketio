@@ -62,7 +62,12 @@ def test():
 def consumer_task():
     while True:
         print('start function consumer_task()')
-        socketio.sleep(3)
+        socketio.sleep(10)
+
+        data = {
+            'message': "test function consumser_task()"
+        }
+        socketio.emit('reply', data, namespace='/demo')
 
 
 def setup_app():

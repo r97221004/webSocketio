@@ -45,11 +45,16 @@
                 // Socket.IO get test
                 socket.on("message", function (data) {
                     $('#chat_content').append('<p>System: ' + data + '</p>')
-                })
+                });
 
                 // Socket.IO send test
                 $("#test").click(function (e) {
                     socket.emit('test')
+                });
+
+                socket.on('reply', function (msg) {
+                    console.log(msg)
+                    $('#log').append('<br>Received sms reply: ' + JSON.stringify(msg));
                 })
 
             })
@@ -70,6 +75,11 @@
         </form>
         <hr />
         <div id="chat_content"></div>
+
+        <h2>Receive:</h2>
+        <div>
+            <p id="log"></p>
+        </div>
 
     </body>
 
