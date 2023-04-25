@@ -59,5 +59,17 @@ def test():
     return render_template('index.html')
 
 
+def consumer_task():
+    while True:
+        print('start function consumer_task()')
+        socketio.sleep(3)
+
+
+def setup_app():
+    socketio.start_background_task(consumer_task)
+
+
+setup_app()
+
 # if __name__ == "__main__":
 #     socketio.run(app, host="192.168.195.128")
