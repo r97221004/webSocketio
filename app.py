@@ -16,6 +16,7 @@ def connect():
 
 
 @socketio.on('message', namespace='/index')
+@sio_jwt_required()
 def handle_message(message):
     print(f"Receive mseeage: {message}")
     if message != "User connected!":
@@ -23,38 +24,32 @@ def handle_message(message):
         send(message, broadcast=True)
 
 
-# @socketio.on('connect')
-# @sio_jwt_required()
-# def connect():
-#     sid = request.sid
-#     send(f'sid {sid} connected')
-#     print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ User connected')
+@socketio.on('connect', namespace='/demo')
+@sio_jwt_required()
+def connect():
+    sid = request.sid
+    print(f'User {sid} connected')
 
 
-# @socketio.on('send')
-# def chat(data):
-#     socketio.emit('get', data)
+@socketio.on('send', namespace='/demo')
+def chat(data):
+    socketio.emit('get', data, namespace='/demo')
 
 
-# @socketio.on('test')
-# def test():
-#     socketio.send("test")
+@socketio.on('test', namespace='/demo')
+def test():
+    socketio.send("test", namespace='/demo')
 
 
-# @app.route("/")
-# def index():
-#     return render_template("index.html")
+@app.route("/demo")
+def demo1():
+    return render_template("demo.html")
 
 
-# @app.route("/demo")
-# def demo1():
-#     return render_template("demo.html")
-
-
-@app.route('/test')
+@app.route('/index')
 def test():
     return render_template('index.html')
 
 
-if __name__ == "__main__":
-    socketio.run(app, host="localhost")
+# if __name__ == "__main__":
+#     socketio.run(app, host="192.168.195.128")

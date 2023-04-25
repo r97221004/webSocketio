@@ -51,29 +51,29 @@ def sio_jwt_required():
         def decorated_view(*args, **kwargs):
 
             token = request.headers.get('authorization')
-            print('token: ', token)
+
             if not token:
                 print('Unauthorized')
-    #             handle_emit(401, 'Unauthorized')
+            #     handle_emit(401, 'Unauthorized')
 
-    #         PREFIX = 'Bearer '
-    #         if not token.startswith(PREFIX):
-    #             log.info('Invalid authorization format')
-    #             handle_emit(400, 'Invalid authorization format')
-    #         token = token[len(PREFIX):]
-    #         try:
-    #             request.environ['cmd_jwt_payload'] = jwt.decode(
-    #                 token, JwtConfig.SECRET, algorithms=JwtConfig.ALGORITHM)
+            # PREFIX = 'Bearer '
+            # if not token.startswith(PREFIX):
+            #     log.info('Invalid authorization format')
+            #     handle_emit(400, 'Invalid authorization format')
+            # token = token[len(PREFIX):]
+            # try:
+            #     request.environ['cmd_jwt_payload'] = jwt.decode(
+            #         token, JwtConfig.SECRET, algorithms=JwtConfig.ALGORITHM)
 
-    #         except Exception as e:
-    #             handle_emit(403, str(e))
+            # except Exception as e:
+            #     handle_emit(403, str(e))
 
-    #         try:
-    #             group = request.environ['cmd_jwt_payload']["group"]
-    #             if not list(filter(lambda x: x in UserConfig.CMD_GROUP, group)):
-    #                 handle_emit(403, "no privileges")
-    #         except Exception as e:
-    #             handle_emit(403, str(e))
+            # try:
+            #     group = request.environ['cmd_jwt_payload']["group"]
+            #     if not list(filter(lambda x: x in UserConfig.CMD_GROUP, group)):
+            #         handle_emit(403, "no privileges")
+            # except Exception as e:
+            #     handle_emit(403, str(e))
 
             return func(*args, **kwargs)
         return decorated_view

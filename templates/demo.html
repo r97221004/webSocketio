@@ -11,9 +11,20 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 // Socket.IO Start connect
-                var socket = io.connect("http://localhost:8081", {
-                    path: '/cmd/api'
+                namespace = '/demo'
+                var socket = io.connect("http://localhost:8081" + namespace, {
+                    extraHeaders: {
+                        Authorization: localStorage.getItem('jwt')
+                    },
+                    transportOptions: {
+                        polling: {
+                            extraHeaders: {
+                                Authorization: localStorage.getItem('jwt')
+                            }
+                        }
+                    }
                 })
+
                 socket.on('connect', function () {
                     socket.send("User connected!");
                 });
