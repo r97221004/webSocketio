@@ -13,7 +13,7 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 namespace = '/index'
-                var socket = io.connect("http://localhost:8081" + namespace, {
+                var socket = io.connect("http://192.168.195.128:8081" + namespace, {
                     extraHeaders: {
                         Authorization: localStorage.getItem('jwt')
                     },
@@ -27,11 +27,24 @@
                 });
 
                 socket.on('connect', function () {
-                    socket.send("User connected!");
+                    socket.emit('echo', { 'message': 'I\'m connected!' })
                 });
 
                 socket.on('message', function (data) {
                     $('#messages').append($('<p>').text(data));
+                });
+
+                socket.on(401, function (data) {
+                    var bodyElement = document.body;
+                    bodyElement.innerHTML = `<h1>${data}</h1>`;
+                });
+                socket.on(400, function (data) {
+                    var bodyElement = document.body;
+                    bodyElement.innerHTML = `<h1>${data}</h1>`;
+                });
+                socket.on(403, function (data) {
+                    var bodyElement = document.body;
+                    bodyElement.innerHTML = `<h1>${data}</h1>`;
                 });
 
 
